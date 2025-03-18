@@ -1,13 +1,26 @@
 "use client";
-// import { useEffect } from "react";
-
-import { KeyboardEvent } from "react";
 
 export default function Main() {
-  function keyboardMove(event: KeyboardEvent) {
-    console.log(event);
-    // if (e.key === "Enter") {
-    // }
+  // # 키보드 상하좌우 움직임 함수
+  function keyboardMove(event: any) {
+    const targetEl = event.target.parentElement.style;
+
+    if (event.key === "ArrowDown") {
+      let nowTop = Number(targetEl.top.replace("px", ""));
+      targetEl.top = nowTop + 100 + "px";
+    } else if (event.key === "ArrowUp") {
+      let nowTop = Number(targetEl.top.replace("px", ""));
+      targetEl.top = nowTop - 100 + "px";
+      console.log(nowTop);
+    } else if (event.key === "ArrowLeft") {
+      let nowLeft = Number(targetEl.left.replace("px", ""));
+      targetEl.left = nowLeft - 100 + "px";
+      console.log(nowLeft);
+    } else if (event.key === "ArrowRight") {
+      let nowLeft = Number(targetEl.left.replace("px", ""));
+      targetEl.left = nowLeft + 100 + "px";
+      console.log(nowLeft);
+    }
   }
 
   // useEffect(() => {
@@ -19,8 +32,8 @@ export default function Main() {
   return (
     <div>
       <main className="boundary">
-        <div className="me" id="me">
-          <input type="text" onKeyDown={(e) => keyboardMove(e)} />
+        <div className="me">
+          <input type="text" id="me" onKeyDown={(e) => keyboardMove(e)} />
         </div>
         <div>1</div>
         <div>2</div>
@@ -73,27 +86,36 @@ export default function Main() {
         <div>48</div>
         <div>49</div>
         <div>50</div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div>51</div>
+        <div>52</div>
+        <div>53</div>
+        <div>54</div>
+        <div>55</div>
+        <div>56</div>
+        <div>57</div>
+        <div>58</div>
+        <div>59</div>
+        <div>60</div>
+        <div>61</div>
+        <div>62</div>
+        <div>63</div>
+        <div>64</div>
+        <div>65</div>
+        <div>66</div>
+        <div>67</div>
+        <div>68</div>
+        <div>69</div>
+        <div>70</div>
+        <div>71</div>
+        <div>72</div>
+        <div>73</div>
+        <div>74</div>
+        <div>75</div>
+        <div>76</div>
+        <div>77</div>
+        <div>78</div>
+        <div>79</div>
+        <div>80</div>
       </main>
     </div>
   );
