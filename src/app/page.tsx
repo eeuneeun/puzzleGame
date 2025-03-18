@@ -4,22 +4,17 @@ export default function Main() {
   // # 키보드 상하좌우 움직임 함수
   function keyboardMove(event: any) {
     const targetEl = event.target.parentElement.style;
+    const nowTop: number = Number(targetEl.top.replace("px", ""));
+    const nowLeft: number = Number(targetEl.left.replace("px", ""));
 
     if (event.key === "ArrowDown") {
-      let nowTop = Number(targetEl.top.replace("px", ""));
-      targetEl.top = nowTop + 100 + "px";
+      if (nowTop !== 900) targetEl.top = nowTop + 100 + "px";
     } else if (event.key === "ArrowUp") {
-      let nowTop = Number(targetEl.top.replace("px", ""));
-      targetEl.top = nowTop - 100 + "px";
-      console.log(nowTop);
+      if (nowTop !== 0) targetEl.top = nowTop - 100 + "px";
     } else if (event.key === "ArrowLeft") {
-      let nowLeft = Number(targetEl.left.replace("px", ""));
-      targetEl.left = nowLeft - 100 + "px";
-      console.log(nowLeft);
+      if (nowLeft !== 0) targetEl.left = nowLeft - 100 + "px";
     } else if (event.key === "ArrowRight") {
-      let nowLeft = Number(targetEl.left.replace("px", ""));
-      targetEl.left = nowLeft + 100 + "px";
-      console.log(nowLeft);
+      if (nowLeft !== 900) targetEl.left = nowLeft + 100 + "px";
     }
   }
 
