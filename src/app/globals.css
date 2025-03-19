@@ -1,17 +1,65 @@
-/* Theme */
+/* LAYOUTS */
+.header {
+  position: relative;
+  width: 100%;
+  height: 50px;
+}
+
+.header .title {
+  display: flex;
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: 700;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  margin-left: -50px;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-wrap {
+  width: 100px;
+  height: 40px;
+  position: absolute;
+  right: 0;
+  top: 5px;
+}
+
+.login-wrap button {
+  width: 100px;
+  height: 100%;
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  background: #828282;
+}
+.login-wrap button:hover {
+  animation: 5s ease-in;
+  background: #469ca8;
+}
+
+/* THEME */
+button {
+  cursor: pointer !important;
+  border: 0 !important;
+}
 .save-btn {
   width: 100%;
   background: #56b4c0;
   color: #fff;
   padding: 10px;
-  animation: 3s ease-in;
   border: 0;
   margin-bottom: 10px;
+  border-radius: 10px;
 }
 .save-btn:hover {
+  animation: 3s ease-in;
   background: #35757d;
 }
-/* 반영 영역 */
+
+/* CONTENTS AREA */
 .wrap,
 .main {
   width: 100% !important;
@@ -35,8 +83,7 @@
   height: 10%;
   background: #eee;
 }
-.me,
-#me {
+.me {
   width: 10%;
   height: 10%;
   display: flex;
@@ -47,4 +94,10 @@
   left: 0;
   font-size: 25px;
   border: 2px dotted #0a0a0a;
+}
+#me {
+  width: 100%;
+  height: 100%;
+  background: url(../../public/archar.png) no-repeat center;
+  background-size: contain;
 }
