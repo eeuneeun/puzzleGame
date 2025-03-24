@@ -27,7 +27,8 @@
   top: 5px;
 }
 
-.login-wrap button {
+.login-wrap button,
+.login-wrap a {
   width: 100px;
   height: 100%;
   border: 0;
@@ -35,7 +36,8 @@
   color: #fff;
   background: #828282;
 }
-.login-wrap button:hover {
+.login-wrap button:hover,
+.login-wrap a:hover {
   animation: 5s ease-in;
   background: #469ca8;
 }
@@ -67,20 +69,21 @@ button {
 }
 
 .game-zone {
-  width: 90%;
-  height: 90%;
+  width: 810px;
+  height: 810px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   place-content: flex-start;
   flex-wrap: wrap;
+  flex-direction: row;
   position: relative;
   margin: 0 auto;
 }
 
 .game-zone > div {
-  width: 10%;
-  height: 10%;
+  width: 100px;
+  height: 100px;
   background: #eee;
 }
 .me {
