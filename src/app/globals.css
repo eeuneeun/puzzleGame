@@ -69,7 +69,7 @@ button {
 }
 
 .game-zone {
-  width: 810px;
+  width: 900px;
   height: 810px;
   display: flex;
   justify-content: flex-start;

@@ -1,0 +1,16 @@
+{
+  "userId": "1234",
+  "savePointId": 345,
+  "gameData": {
+    "puzzleBlock": [2, 3, 5, 6, 7, 19, 20],
+    "nowLocation": {
+      "x": 9,
+      "y": 1
+    }
+  },
+  "saveTime": "2025-3-24 59:29",
+  "renewTime": "2025-3-25 59:29", // 수정 사항이 없다면 없을 수 있으므로 DB에서 빈 값(null) 허용
+  "deleteTime": "2025-3-24 59:29", // 삭제 된 사항이 없다면 없을 수 있으므로 DB에서 빈 값(null) 허용
+  "renewCount": 10, // 수정을 요청한 숫자, modify(UPDATE) 되는 경우 +1 처리하면 됨
+  "isDelete": true // 삭제가 된 데이터이므로, 만약 true 인 경우 유저에게 노출 금지
+}

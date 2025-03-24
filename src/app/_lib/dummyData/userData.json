@@ -1,0 +1,13 @@
+{
+  "id": "string",
+  // email, OAuth 인증을 하는 경우 임의의 문자열
+  "password": "hash 가 끝난, 혹은 DB 에서 자동 암호화 처리된 string",
+  "oAuth": "channel",
+  // 카카오 가입, 구글 가입, 네이버
+  "nickname": "string",
+  "photo": "사진",
+  "state": "string",
+  "signUpDate": "timeStamp",
+  "isDelete": "boolean",
+  "resign": "timeStamp"
+}
