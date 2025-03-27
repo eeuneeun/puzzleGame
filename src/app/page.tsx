@@ -7,16 +7,38 @@ export default function Main() {
     const nowTop: number = Number(targetEl.top.replace("px", ""));
     const nowLeft: number = Number(targetEl.left.replace("px", ""));
 
+    const emptySell: HTMLElement | null = document.querySelector("#emptySell");
+
+    const nowEmptySellTop: number = Number(
+      emptySell.style.top.replace("px", "")
+    );
+    const nowEmptySellLeft: number = Number(
+      emptySell.style.left.replace("px", "")
+    );
+
     // # 상하좌우 키 눌렀을 경우 이동 함수
     if (event.key === "ArrowDown") {
-      if (nowTop !== 760.4) targetEl.top = nowTop + 100 + "px";
+      if (nowTop !== 800 || nowEmptySellTop !== 800) {
+        targetEl.top = nowTop + 100 + "px";
+        emptySell.style.top = nowEmptySellTop + 100 + "px";
+      }
     } else if (event.key === "ArrowUp") {
-      if (nowTop !== 0) targetEl.top = nowTop - 100 + "px";
+      if (nowTop !== 0) {
+        targetEl.top = nowTop - 100 + "px";
+        emptySell.style.top = nowEmptySellTop - 100 + "px";
+      }
     } else if (event.key === "ArrowLeft") {
-      if (nowLeft !== 0) targetEl.left = nowLeft - 100 + "px";
+      if (nowLeft !== 0) {
+        targetEl.left = nowLeft - 100 + "px";
+        emptySell.style.left = nowEmptySellLeft - 100 + "px";
+      }
     } else if (event.key === "ArrowRight") {
-      if (nowLeft !== 760.4) targetEl.left = nowLeft + 100 + "px";
+      if (nowLeft !== 800) {
+        targetEl.left = nowLeft + 100 + "px";
+        emptySell.style.left = nowEmptySellLeft + 100 + "px";
+      }
     }
+
     // # 엔터 키 눌렀을 경우 블럭 이동 함수
     if (event.key === "Enter") {
     }
@@ -25,7 +47,7 @@ export default function Main() {
   // # 임시 배열 함수
   function arrLoop() {
     const newArr = [];
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 81; i++) {
       newArr.push(<div key={i}>{i + 1}</div>);
     }
     return newArr;
@@ -43,6 +65,9 @@ export default function Main() {
         <div className="game-zone">
           <div className="me">
             <input type="text" id="me" onKeyDown={(e) => keyboardMove(e)} />
+          </div>
+          <div id="emptySell" className="empty-sell">
+            0
           </div>
           {arrLoop()}
         </div>
