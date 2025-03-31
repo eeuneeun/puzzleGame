@@ -73,6 +73,46 @@ button {
   height: 100vh !important;
 }
 
+/* MAIN */
+.main {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 100px;
+}
+.main .job {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.main .job li {
+  width: 25%;
+  list-style: none;
+}
+.main .job li button {
+  background: #879698;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 3px;
+  width: 80%;
+  padding: 5px;
+}
+.main .job li button img {
+  width: 100%;
+}
+.game-start-btn {
+  width: 100%;
+  background: #35757d;
+  border-radius: 3px;
+  font-size: 18px;
+  color: #fff;
+  height: 100px;
+}
+/* GAME */
 .game-zone {
   width: 900px;
   height: 900px;
