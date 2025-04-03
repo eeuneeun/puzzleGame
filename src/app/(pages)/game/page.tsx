@@ -1,5 +1,7 @@
 "use client";
 
+import { shuffle } from "@/app/_lib/utils";
+
 export default function Main() {
   // # 키보드 상하좌우 움직임 함수
   function keyboardMove(event: any) {
@@ -46,10 +48,11 @@ export default function Main() {
 
   // # 임시 배열 함수
   function arrLoop() {
-    const newArr = [];
+    let newArr = [];
     for (let i = 0; i < 81; i++) {
       newArr.push(<div key={i}>{i + 1}</div>);
     }
+    shuffle(newArr);
     return newArr;
   }
   // useEffect(() => {
@@ -60,7 +63,7 @@ export default function Main() {
 
   return (
     <div className="wrap">
-      <main className="main">
+      <main className="game">
         <button className="save-btn">저장하기</button>
         <div className="game-zone">
           <div className="me">

@@ -1,6 +1,39 @@
 /* DEFAULT */
+body {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  position: relative;
+}
+
 input:focus {
   outline: 1px solid #eee;
+}
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+
+a,
+a:hover,
+a:visited {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* PREFIXED */
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
 }
 
 /* LAYOUTS */
@@ -12,9 +45,9 @@ input:focus {
 
 .header .title {
   display: flex;
-  width: 100px;
-  height: 30px;
-  font-size: 15px;
+  width: 300;
+  height: 50px;
+  font-size: 30px;
   font-weight: 700;
   position: absolute;
   top: 10px;
@@ -22,6 +55,14 @@ input:focus {
   margin-left: -50px;
   align-items: center;
   justify-content: center;
+}
+.header + div {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 50px) !important;
+  top: 50px;
+  left: 0;
+  right: 0;
 }
 
 .login-wrap {
@@ -41,10 +82,58 @@ input:focus {
   color: #fff;
   background: #828282;
 }
+
 .login-wrap button:hover,
 .login-wrap a:hover {
   animation: 5s ease-in;
   background: #469ca8;
+}
+.signin {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signin h2 {
+  display: none;
+}
+
+.signin-form {
+  width: 100%;
+}
+.signin-form form {
+  width: 100%;
+  gap: 15px;
+}
+
+.signin-form .list {
+  width: 100%;
+  gap: 10px;
+}
+.signin-form .list li {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.signin-form .list li label {
+  width: 130px;
+}
+.signin-form .list li input {
+  width: calc(100% - 130px);
+  height: 100%;
+  border-radius: 5px;
+  border: 1px solid #35757d;
+}
+.sign-btn {
+  width: 100%;
+  height: 50px;
+  background: #35757d;
+  color: #fff;
 }
 
 /* THEME */

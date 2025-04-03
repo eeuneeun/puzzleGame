@@ -1,8 +1,14 @@
-import React from "react";
+"use client";
 
+import React from "react";
+import { useRouter } from "next/navigation";
 type Props = {};
 
 export default function Main({}: Props) {
+  const router = useRouter();
+  function goGame() {
+    router.push("/game");
+  }
   return (
     <div className="main">
       <ul className="job">
@@ -32,7 +38,9 @@ export default function Main({}: Props) {
         </li>
       </ul>
 
-      <button className="game-start-btn">GAME START</button>
+      <button className="game-start-btn" onClick={goGame}>
+        GAME START
+      </button>
     </div>
   );
 }

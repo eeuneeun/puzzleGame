@@ -6,7 +6,7 @@ type Props = {};
 
 export default function Signin({}: Props) {
   return (
-    <div>
+    <div className="signin">
       <h2>로그인</h2>
       <SigninForm />
       {/* <SigninBtn /> */}
