@@ -1,14 +1,15 @@
 "use client";
+import { signIn } from "next-auth/react";
 import { useState } from "react";
 // import { authenticate } from "@/lib/actions";
 import { useFormState } from "react-dom";
 
 export default function SigninForm() {
-  const [errorMsg, dispatch] = useState("에러");
-  //   const [errorMsg, dispatch] = useFormState(authenticate, undefined);
+  // const [errorMsg, dispatch] = useState("");
+  // const [errorMsg, dispatch] = useFormState(authenticate, undefined);
   return (
     <div className="signin-form">
-      <form className="flex flex-col action={dispatch}">
+      <form className="flex flex-col">
         <ul className="list flex flex-col">
           <li>
             <label htmlFor="id">ID</label>
@@ -24,8 +25,22 @@ export default function SigninForm() {
             />
           </li>
         </ul>
+        <ul className="sns-signin">
+          <li>
+            <button>구글</button>
+          </li>
+          <li>
+            <button onClick={() => signIn()}>네이버</button>
+          </li>
+          <li>
+            <button onClick={() => signIn()}>카카오</button>
+          </li>
+          <li>
+            <button>깃헙</button>
+          </li>
+        </ul>
         <button className="sign-btn">로그인</button>
-        <p>{errorMsg}</p>
+        {/* <p>{errorMsg}</p> */}
       </form>
     </div>
   );

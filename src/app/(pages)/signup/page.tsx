@@ -5,8 +5,8 @@ type Props = {};
 
 export default function Signin({}: Props) {
   return (
-    <div>
-      <h2>로그인</h2>
+    <div className="signup">
+      <h2>회원가입</h2>
       {/* <SigninBtn /> */}
     </div>
   );

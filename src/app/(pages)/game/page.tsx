@@ -1,6 +1,6 @@
 "use client";
 
-import { shuffle } from "@/app/_lib/utils";
+import { shuffle } from "../../_lib/utils";
 
 export default function Main() {
   // # 키보드 상하좌우 움직임 함수
@@ -11,13 +11,12 @@ export default function Main() {
 
     const emptySell: HTMLElement | null = document.querySelector("#emptySell");
 
-    const nowEmptySellTop: number = Number(
-      emptySell.style.top.replace("px", "")
-    );
-    const nowEmptySellLeft: number = Number(
-      emptySell.style.left.replace("px", "")
-    );
-
+    let nowEmptySellTop: number = 0;
+    let nowEmptySellLeft: number = 0;
+    if (emptySell !== null) {
+      nowEmptySellTop = Number(emptySell.style.top.replace("px", ""));
+      nowEmptySellLeft = Number(emptySell.style.left.replace("px", ""));
+    }
     // # 상하좌우 키 눌렀을 경우 이동 함수
     if (event.key === "ArrowDown") {
       if (nowTop !== 800 || nowEmptySellTop !== 800) {
