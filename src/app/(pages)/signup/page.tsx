@@ -7,7 +7,7 @@ export default function Signin({}: Props) {
   return (
     <div className="signup">
       <h2>회원가입</h2>
-      {/* <SigninBtn /> */}
+      <SignupForm />
     </div>
   );
 }

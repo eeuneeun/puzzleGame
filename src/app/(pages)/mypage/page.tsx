@@ -6,8 +6,7 @@ type Props = {};
 export default function Signin({}: Props) {
   return (
     <div>
-      <h2>로그인</h2>
-      {/* <SigninBtn /> */}
+      <h2>마이 페이지</h2>
     </div>
   );
 }

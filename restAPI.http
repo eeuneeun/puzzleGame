@@ -1,15 +1,24 @@
-@apiUrl = http://localhost:8080
+@apiUrl = localhost:8080
 
-## ★유저 
+### ★유저 
 
-## 회원가입
-POST http://localhost:8080/signup/user
+### 회원가입
+POST http://{{apiUrl}}/signup/user
 content-type: application/json
 
 {
-    "email": "sample@naver.com",
+    "email": "samplasde4@naver.com",
     "password": "qwer1234"
 }
+
+### 토큰 발급
+POST http://{{apiUrl}}/api/token
+content-type: application/json
+
+{
+    "email": "sample4@naver.com",
+}
+
 
 
 ### 로그인
@@ -44,6 +53,11 @@ client_id=web
 &grant_type=refresh_token
 &refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI2ZmRmY2FjNi0yOTg5LTRmZGMtOTkwOC0zNTk3Y2Q5YTM5ODkifQ.eyJpYXQiOjE2MzEwNDU4MDQsImp0aSI6ImVhODZjZGEwLTYwNWUtNDE2OC1iYWNjLTAwNzYxNzJmYTY3OCIsImlzcyI6Imh0dHA6Ly8xNzUuMjA3LjEyLjEzODoxMDA1MC9hdXRoL3JlYWxtcy9rcHAiLCJhdWQiOiJodHRwOi8vMTc1LjIwNy4xMi4xMzg6MTAwNTAvYXV0aC9yZWFsbXMva3BwIiwic3ViIjoiNzNjOTc1NzUtMWM3OC00MWIzLWE3YjMtN2NiMzNkM2YwMTdmIiwidHlwIjoiT2ZmbGluZSIsImF6cCI6IndlYiIsInNlc3Npb25fc3RhdGUiOiJlNmU4ZTFhOC02YWNjLTQ3YjUtOTZkMS1iZWI3ZTVjMGIyYmEiLCJzY29wZSI6ImluZm8gb2ZmbGluZV9hY2Nlc3MifQ.QeGXJ5LtLvflCfEbYDQ9zZVXOD_pjVL7R-nE7uKJ5q0
 
+### 유저 정보
+POST http://{{apiUrl}}/api/access
+Authorization: Bearer {{accessToken}}
+
 ### 유저 탈퇴
 POST http://{{apiUrl}}/leave
 Authorization: Bearer {{accessToken}}
+
