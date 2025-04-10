@@ -1,0 +1,49 @@
+@apiUrl = http://localhost:8080
+
+## ★유저 
+
+## 회원가입
+POST http://localhost:8080/signup/user
+content-type: application/json
+
+{
+    "email": "sample@naver.com",
+    "password": "qwer1234"
+}
+
+
+### 로그인
+# @name login
+POST http://{{apiUrl}}/signin
+Content-Type: application/x-www-form-urlencoded
+
+client_id=web
+#&username=01056785678
+#&username=customer1
+&phone_number=01012341234
+&password=1234
+&grant_type=password
+#&scope=offline_access
+
+### token
+@accessToken = {{login.response.body.access_token}}
+@refreshToken = {{login.response.body.refresh_token}}
+
+### 로그아웃
+POST http://{{apiUrl}}/logout
+Content-Type: application/x-www-form-urlencoded
+
+client_id=web
+&refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI2ZmRmY2FjNi0yOTg5LTRmZGMtOTkwOC0zNTk3Y2Q5YTM5ODkifQ.eyJpYXQiOjE2MzEwNjE2MTksImp0aSI6IjVhNGIzZDU3LTAzZGItNGI2ZC04MTY2LTNiYTg5M2Y4NjNjNCIsImlzcyI6Imh0dHA6Ly8xNzUuMjA3LjEyLjEzODoxMDA1MC9hdXRoL3JlYWxtcy9rcHAiLCJhdWQiOiJodHRwOi8vMTc1LjIwNy4xMi4xMzg6MTAwNTAvYXV0aC9yZWFsbXMva3BwIiwic3ViIjoiNzNjOTc1NzUtMWM3OC00MWIzLWE3YjMtN2NiMzNkM2YwMTdmIiwidHlwIjoiT2ZmbGluZSIsImF6cCI6IndlYiIsInNlc3Npb25fc3RhdGUiOiI0NjAwMzlmYy1kNDE3LTQwYTEtOTFhMC0wY2ZiNjc1Y2M0ZDQiLCJzY29wZSI6ImluZm8gb2ZmbGluZV9hY2Nlc3MifQ.5JKCIqm3u-NXkyfCIksw3kEwIc5TrOAB-wND-nQQuMw
+
+### 토큰 리프레쉬
+POST http://{{apiUrl}}/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=web
+&grant_type=refresh_token
+&refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI2ZmRmY2FjNi0yOTg5LTRmZGMtOTkwOC0zNTk3Y2Q5YTM5ODkifQ.eyJpYXQiOjE2MzEwNDU4MDQsImp0aSI6ImVhODZjZGEwLTYwNWUtNDE2OC1iYWNjLTAwNzYxNzJmYTY3OCIsImlzcyI6Imh0dHA6Ly8xNzUuMjA3LjEyLjEzODoxMDA1MC9hdXRoL3JlYWxtcy9rcHAiLCJhdWQiOiJodHRwOi8vMTc1LjIwNy4xMi4xMzg6MTAwNTAvYXV0aC9yZWFsbXMva3BwIiwic3ViIjoiNzNjOTc1NzUtMWM3OC00MWIzLWE3YjMtN2NiMzNkM2YwMTdmIiwidHlwIjoiT2ZmbGluZSIsImF6cCI6IndlYiIsInNlc3Npb25fc3RhdGUiOiJlNmU4ZTFhOC02YWNjLTQ3YjUtOTZkMS1iZWI3ZTVjMGIyYmEiLCJzY29wZSI6ImluZm8gb2ZmbGluZV9hY2Nlc3MifQ.QeGXJ5LtLvflCfEbYDQ9zZVXOD_pjVL7R-nE7uKJ5q0
+
+### 유저 탈퇴
+POST http://{{apiUrl}}/leave
+Authorization: Bearer {{accessToken}}
