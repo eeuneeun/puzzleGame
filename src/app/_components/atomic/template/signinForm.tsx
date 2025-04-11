@@ -11,6 +11,8 @@ import { EventHandler, useState } from "react";
 // import { authenticate } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import { Resolver, useForm } from "react-hook-form";
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
 
 type FormValues = {
   id: string;
@@ -44,7 +46,9 @@ export default function SigninForm() {
         password: data.password,
       })
       .then(function (response) {
-        console.log(response);
+        if (response.status == 200) {
+          router.push("/");
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -65,6 +69,7 @@ export default function SigninForm() {
     event.preventDefault();
     onSubmit();
   }
+  const router = useRouter();
 
   return (
     <div className="signin-form">
