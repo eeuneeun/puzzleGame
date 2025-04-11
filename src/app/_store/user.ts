@@ -6,7 +6,7 @@ const useStore = create((set) => ({
     name: "",
     profile: "",
   },
-  removeAllBears: () =>
+  removeAllUserInfo: () =>
     set({
       user: {
         id: "",

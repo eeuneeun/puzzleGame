@@ -14,12 +14,15 @@ import { Resolver, useForm } from "react-hook-form";
 import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
 
+// @ TYPE : 폼 입력 값
 type FormValues = {
   id: string;
   password: string;
 };
 
+// # 회원가입 폼
 export default function SigninForm() {
+  // # 폼 훅 리졸버
   const resolver: Resolver<FormValues> = async (values) => {
     return {
       values: values.id ? values : {},
@@ -33,12 +36,16 @@ export default function SigninForm() {
         : {},
     };
   };
+
+  // # 리액트 훅 폼 리소스
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({ resolver });
 
+  // # 폼 제출
+  // - 백엔드 통신 시도
   const onSubmit = handleSubmit((data) =>
     axios
       .post("http://localhost:8080/signup/user", {
@@ -56,7 +63,7 @@ export default function SigninForm() {
   );
 
   // @ 회원가입 API Params
-  let signinApiParams = {
+  let signupApiParams = {
     url: "http://localhost:8080/signup/user",
     headers: { "content-type": "application/json" },
     method: "post",
