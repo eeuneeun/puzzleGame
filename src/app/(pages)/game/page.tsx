@@ -1,8 +1,11 @@
 "use client";
 
+import useGameStore from "@/app/_store/game";
 import { shuffle } from "../../_lib/utils";
 
-export default function Main() {
+export default function Game() {
+  const { game, clearAllGameInfo, updateGame } = useGameStore();
+  const job: string = game.job;
   // # 키보드 상하좌우 움직임 함수
   function keyboardMove(event: any) {
     const targetEl = event.target.parentElement.style;
@@ -66,7 +69,12 @@ export default function Main() {
         <button className="save-btn">저장하기</button>
         <div className="game-zone">
           <div className="me">
-            <input type="text" id="me" onKeyDown={(e) => keyboardMove(e)} />
+            <input
+              type="text"
+              className={job}
+              id="me"
+              onKeyDown={(e) => keyboardMove(e)}
+            />
           </div>
           <div id="emptySell" className="empty-sell">
             0

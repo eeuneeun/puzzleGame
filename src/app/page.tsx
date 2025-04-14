@@ -3,14 +3,17 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { set } from "react-hook-form";
+import useGameStore from "./_store/game";
 type Props = {};
 
 export default function Main({}: Props) {
   const router = useRouter();
+  const { game, clearAllGameInfo, updateGame } = useGameStore();
   const [job, setJob] = useState("warrior");
 
   function selectJob(job: string) {
     setJob(job);
+    updateGame(job);
   }
 
   function goGame() {
