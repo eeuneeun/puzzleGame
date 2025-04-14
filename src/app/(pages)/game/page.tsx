@@ -69,12 +69,7 @@ export default function Game() {
         <button className="save-btn">저장하기</button>
         <div className="game-zone">
           <div className="me">
-            <input
-              type="text"
-              className={job}
-              id="me"
-              onKeyDown={(e) => keyboardMove(e)}
-            />
+            <input className={job} id="me" onKeyDown={(e) => keyboardMove(e)} />
           </div>
           <div id="emptySell" className="empty-sell">
             0

@@ -284,6 +284,8 @@ button {
   border: 0;
   padding: 0;
   outline: none;
+  cursor: pointer;
+  caret-color: transparent;
   background: url(../../public/archer.png) no-repeat center/100%;
 }
 #me:focus {
