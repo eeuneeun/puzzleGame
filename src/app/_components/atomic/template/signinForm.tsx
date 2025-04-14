@@ -13,6 +13,7 @@ import { useFormState } from "react-dom";
 import { Resolver, useForm } from "react-hook-form";
 import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
+import { getServerSession } from "next-auth";
 
 // @ TYPE : 폼 입력 값
 type FormValues = {
@@ -53,6 +54,9 @@ export default function SigninForm() {
         password: data.password,
       })
       .then(function (response) {
+        console.log(response);
+        console.log(getServerSession());
+
         if (response.status == 200) {
           router.push("/");
         }

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const useStore = create((set) => ({
+const useUserStore = create((set) => ({
   user: {
     id: "",
     name: "",
@@ -14,5 +14,7 @@ const useStore = create((set) => ({
         profile: "",
       },
     }),
-  updateBears: (newUerInfo: any) => set({ user: newUerInfo }),
+  updateUser: (newUerInfo: any) => set({ user: { ...newUerInfo } }),
 }));
+
+export default useUserStore;

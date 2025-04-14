@@ -1,38 +1,45 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { set } from "react-hook-form";
 type Props = {};
 
 export default function Main({}: Props) {
   const router = useRouter();
+  const [job, setJob] = useState("warrior");
+
+  function selectJob(job: string) {
+    setJob(job);
+  }
+
   function goGame() {
     router.push("/game");
   }
   return (
     <div className="main">
       <ul className="job">
-        <li>
-          <button>
+        <li className={job === "warrior" ? "active" : ""}>
+          <button onClick={() => selectJob("warrior")}>
             <img src="/warrior.png" />
             <span>전사</span>
           </button>
         </li>
-        <li>
-          <button>
+        <li className={job === "wizard" ? "active" : ""}>
+          <button onClick={() => selectJob("wizard")}>
             <img src="/wizard.png" />
             <span>마법사</span>
           </button>
         </li>
-        <li>
-          <button>
-            <img src="/archar.png" />
+        <li className={job === "archer" ? "active" : ""}>
+          <button onClick={() => selectJob("archer")}>
+            <img src="/archer.png" />
             <span>궁수</span>
           </button>
         </li>
-        <li>
-          <button>
-            <img src="/theff.png" />
+        <li className={job === "thief" ? "active" : ""}>
+          <button onClick={() => selectJob("thief")}>
+            <img src="/thief.png" />
             <span>도적</span>
           </button>
         </li>
