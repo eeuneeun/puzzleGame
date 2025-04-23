@@ -3,7 +3,7 @@ import { create } from "zustand";
 const useGameStore = create((set) => ({
   game: {
     id: "",
-    job: "",
+    job: "warrior",
   },
   clearAllGameInfo: () =>
     set({

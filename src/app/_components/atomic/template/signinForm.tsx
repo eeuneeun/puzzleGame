@@ -14,22 +14,22 @@ import { Resolver, useForm } from "react-hook-form";
 import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
 import { getServerSession } from "next-auth";
-
+import Link from "next/link";
 // @ TYPE : 폼 입력 값
 type FormValues = {
-  id: string;
+  email: string;
   password: string;
 };
 
-// # 회원가입 폼
+// # 로그인 폼
 export default function SigninForm() {
   // # 폼 훅 리졸버
   const resolver: Resolver<FormValues> = async (values) => {
     return {
-      values: values.id ? values : {},
+      values: values.email ? values : {},
       errors: !values.password
         ? {
-            id: {
+            email: {
               type: "required",
               message: "This is required.",
             },
@@ -47,28 +47,18 @@ export default function SigninForm() {
 
   // # 폼 제출
   // - 백엔드 통신 시도
-  const onSubmit = handleSubmit((data) =>
-    axios
-      .post("http://localhost:8080/signup/user", {
-        email: data.id,
-        password: data.password,
-      })
-      .then(function (response) {
-        console.log(response);
-        console.log(getServerSession());
-
-        if (response.status == 200) {
-          router.push("/");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-  );
+  const onSubmit = handleSubmit(async (data) => {
+    await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: true,
+      callbackUrl: "/", // 로그인 성공시 이동
+    });
+  });
 
   // @ 회원가입 API Params
   let signupApiParams = {
-    url: "http://localhost:8080/signup/user",
+    url: "http://localhost:8080/login",
     headers: { "content-type": "application/json" },
     method: "post",
     withCredentials: true,
@@ -87,10 +77,15 @@ export default function SigninForm() {
       <form className="flex flex-col">
         <ul className="list flex flex-col">
           <li>
-            <label htmlFor="id">ID</label>
-            <input {...register("id")} id="id" name="id" placeholder="ID" />
+            <label htmlFor="email">ID</label>
+            <input
+              {...register("email")}
+              id="email"
+              name="email"
+              placeholder="ID"
+            />
           </li>
-          {errors?.id && <li className="message">{errors.id.message}</li>}
+          {errors?.email && <li className="message">{errors.email.message}</li>}
           <li>
             <label htmlFor="password">PASSWORD</label>
             <input
@@ -116,6 +111,7 @@ export default function SigninForm() {
             <button>깃헙</button>
           </li>
         </ul>
+        <Link href="/signup">회원가입</Link>
         <button className="sign-btn" onClick={(event) => signUp(event)}>
           로그인
         </button>

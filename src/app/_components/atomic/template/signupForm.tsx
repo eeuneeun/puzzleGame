@@ -16,18 +16,19 @@ import { useRouter } from "next/navigation";
 
 // @ TYPE : 폼 입력 값
 type FormValues = {
-  id: string;
+  email: string;
   password: string;
 };
 
 // # 회원가입 폼폼
 export default function SigninForm() {
+  // # 폼 훅 리졸버
   const resolver: Resolver<FormValues> = async (values) => {
     return {
-      values: values.id ? values : {},
+      values: values.email ? values : {},
       errors: !values.password
         ? {
-            id: {
+            email: {
               type: "required",
               message: "This is required.",
             },
@@ -41,20 +42,25 @@ export default function SigninForm() {
     formState: { errors },
   } = useForm<FormValues>({ resolver });
 
-  const onSubmit = handleSubmit((data) =>
-    axios
-      .post("http://localhost:8080/signup/user", {
-        email: data.id,
-        password: data.password,
-      })
-      .then(function (response) {
-        if (response.status == 200) {
-          router.push("/");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
+  const onSubmit = handleSubmit(
+    async (data) =>
+      await axios
+        .post("http://localhost:8080/signup/user", {
+          email: data.email,
+          password: data.password,
+        })
+        .then(function (response) {
+          console.log(response);
+          if (response.status == 201) {
+            router.push("/");
+            // const { accessToken, refreshToken } = await response.json();
+            // response.data.accessToken;
+            // response.data.refreshToken;
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
   );
 
   // @ 회원가입 API Params
@@ -79,9 +85,14 @@ export default function SigninForm() {
         <ul className="list flex flex-col">
           <li>
             <label htmlFor="id">ID</label>
-            <input {...register("id")} id="id" name="id" placeholder="ID" />
+            <input
+              {...register("email")}
+              id="email"
+              name="email"
+              placeholder="ID"
+            />
           </li>
-          {errors?.id && <li className="message">{errors.id.message}</li>}
+          {errors?.email && <li className="message">{errors.email.message}</li>}
           <li>
             <label htmlFor="password">PASSWORD</label>
             <input
@@ -91,20 +102,6 @@ export default function SigninForm() {
               type="password"
               placeholder="PASSWORD"
             />
-          </li>
-        </ul>
-        <ul className="sns-signin">
-          <li>
-            <button>구글</button>
-          </li>
-          <li>
-            <button onClick={() => signIn()}>네이버</button>
-          </li>
-          <li>
-            <button onClick={() => signIn()}>카카오</button>
-          </li>
-          <li>
-            <button>깃헙</button>
           </li>
         </ul>
         <button className="sign-btn" onClick={(event) => signUp(event)}>

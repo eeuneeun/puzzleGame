@@ -57,6 +57,9 @@ export default function Game() {
     shuffle(newArr);
     return newArr;
   }
+
+  // # 게임 중간 저장
+  function saveGame() {}
   // useEffect(() => {
   //   return () => {
   //     console.log("useEffect");

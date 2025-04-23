@@ -1,10 +1,11 @@
-import NextAuth from "next-auth/next";
+import axios from "axios";
+import NextAuth, { getServerSession } from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import KakaoProvider from "next-auth/providers/kakao";
 import NaverProvider from "next-auth/providers/naver";
 
 interface Credentials {
-  username: string;
+  email: string;
   password: string;
 }
 // const signIn = async (data: SignInFormValues) => {
@@ -70,46 +71,71 @@ interface Credentials {
 //   }
 // };
 const handler = NextAuth({
-  // pages: {
-  //   signIn: "/",
-  // },
+  pages: {
+    signIn: "/signin",
+  },
   secret: process.env.SECRET,
   providers: [
-    // CredentialsProvider({
-    //   // The name to display on the sign in form (e.g. "Sign in with...")
-    //   name: "Credentials",
-    //   // `credentials` is used to generate a form on the sign in page.
-    //   // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-    //   // e.g. domain, username, password, 2FA token, etc.
-    //   // You can pass any HTML attribute to the <input> tag through the object.
-    //   credentials: {
-    //     username: { label: "Username", type: "text", placeholder: "jsmith" },
-    //     password: { label: "Password", type: "password" },
-    //   },
-    //   async authorize(credentials: Credentials | undefined) {
-    //     if (!credentials) {
-    //       console.error("No credentials provided");
-    //       return null;
-    //     }
-    //     try {
-    //       const response = await signIn({
-    //         username: credentials.username,
-    //         password: credentials.password,
-    //       });
-    //       if (response) {
-    //         const tokens = response.data;
-    //         return {
-    //           id: credentials.username, // nextauth 타입 맞추기용
-    //           ...tokens,
-    //         };
-    //       }
-    //       return null;
-    //     } catch (error) {
-    //       console.error("Authorize error:", error);
-    //       return null;
-    //     }
-    //   },
-    // }),
+    CredentialsProvider({
+      // The name to display on the sign in form (e.g. "Sign in with...")
+      name: "Credentials",
+      credentials: {
+        email: { label: "email", type: "text" },
+        password: { label: "password", type: "password" },
+      },
+      async authorize(credentials: Credentials | undefined, req) {
+        console.log("로그인 시도", credentials, req);
+        try {
+          // 여기에 실제 인증 로직을 작성
+          const response = await axios
+            .post("http://localhost:8080/login", {
+              email: credentials?.email,
+              password: credentials?.password,
+            })
+            .then(function (response) {
+              console.log("로그인 응답 : ", response);
+              console.log(getServerSession());
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+
+          const user = response?.data; // 백엔드에서 받은 유저 데이터
+
+          if (user) {
+            return user; // ✅ 성공 시 user 반환 (user 객체는 JWT 토큰에 들어감)
+          } else {
+            return null; // ❌ 실패 시 null 반환
+          }
+        } catch (error) {
+          console.error("로그인 에러:", error);
+          return null;
+        }
+      },
+      // async authorize(credentials: Credentials | undefined) {
+      //   if (!credentials) {
+      //     console.error("No credentials provided");
+      //     return null;
+      //   }
+      //   try {
+      //     const response = await signIn({
+      //       username: credentials.username,
+      //       password: credentials.password,
+      //     });
+      //     if (response) {
+      //       const tokens = response.data;
+      //       return {
+      //         id: credentials.username, // nextauth 타입 맞추기용
+      //         ...tokens,
+      //       };
+      //     }
+      //     return null;
+      //   } catch (error) {
+      //     console.error("Authorize error:", error);
+      //     return null;
+      //   }
+      // },
+    }),
     KakaoProvider({
       clientId: process.env.KAKAO_CLIENT_ID as string,
       clientSecret: process.env.KAKAO_CLIENT_SECRET as string,
