@@ -30,12 +30,13 @@ export default function SigninForm() {
         ? {
             email: {
               type: "required",
-              message: "This is required.",
+              message: "이메일을 입력해주세요!",
             },
           }
         : {},
     };
   };
+
   const {
     register,
     handleSubmit,
@@ -52,25 +53,17 @@ export default function SigninForm() {
         .then(function (response) {
           console.log(response);
           if (response.status == 201) {
-            router.push("/");
-            // const { accessToken, refreshToken } = await response.json();
-            // response.data.accessToken;
-            // response.data.refreshToken;
+            router.push("/signin");
+            // console.log(accessToken);
+            // console.log(refreshToken);
+
+            // router.push("/");
           }
         })
         .catch(function (error) {
           console.log(error);
         })
   );
-
-  // @ 회원가입 API Params
-  let signupApiParams = {
-    url: "http://localhost:8080/signup/user",
-    headers: { "content-type": "application/json" },
-    method: "post",
-    withCredentials: true,
-    body: {},
-  };
 
   // # 회원가입
   function signUp(event: any) {

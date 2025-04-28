@@ -56,15 +56,6 @@ export default function SigninForm() {
     });
   });
 
-  // @ 회원가입 API Params
-  let signupApiParams = {
-    url: "http://localhost:8080/login",
-    headers: { "content-type": "application/json" },
-    method: "post",
-    withCredentials: true,
-    body: {},
-  };
-
   // # 회원가입
   function signUp(event: any) {
     event.preventDefault();
@@ -102,10 +93,18 @@ export default function SigninForm() {
             <button>구글</button>
           </li>
           <li>
-            <button onClick={() => signIn()}>네이버</button>
+            <button
+              onClick={() =>
+                router.push("http://localhost:3000/api/auth/signin")
+              }
+            >
+              네이버
+            </button>
           </li>
           <li>
-            <button onClick={() => signIn()}>카카오</button>
+            <button onClick={() => signIn("kakao", { callbackUrl: "/" })}>
+              카카오
+            </button>
           </li>
           <li>
             <button>깃헙</button>

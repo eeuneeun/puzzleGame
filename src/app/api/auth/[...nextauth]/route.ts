@@ -1,5 +1,5 @@
 import axios from "axios";
-import NextAuth, { getServerSession } from "next-auth/next";
+import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import KakaoProvider from "next-auth/providers/kakao";
 import NaverProvider from "next-auth/providers/naver";
@@ -7,6 +7,8 @@ import NaverProvider from "next-auth/providers/naver";
 interface Credentials {
   email: string;
   password: string;
+  id?: string;
+  role?: string;
 }
 // const signIn = async (data: SignInFormValues) => {
 //   try {
@@ -71,9 +73,9 @@ interface Credentials {
 //   }
 // };
 const handler = NextAuth({
-  pages: {
-    signIn: "/signin",
-  },
+  // pages: {
+  //   signIn: "/signin",
+  // },
   secret: process.env.SECRET,
   providers: [
     CredentialsProvider({
@@ -85,56 +87,31 @@ const handler = NextAuth({
       },
       async authorize(credentials: Credentials | undefined, req) {
         console.log("로그인 시도", credentials, req);
-        try {
-          // 여기에 실제 인증 로직을 작성
-          const response = await axios
-            .post("http://localhost:8080/login", {
-              email: credentials?.email,
-              password: credentials?.password,
-            })
-            .then(function (response) {
-              console.log("로그인 응답 : ", response);
-              console.log(getServerSession());
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
+        // # 로그인 시도
+        const res = await fetch("http://localhost:8080/signup/user", {
+          method: "POST",
+          body: JSON.stringify(credentials),
+          headers: { "Content-Type": "application/json" },
+        });
+        // const response = await axios
+        //   .post("http://localhost:8080/login", {
+        //     email: credentials?.email,
+        //     password: credentials?.password,
+        //   })
+        //   .then(function (response) {
+        //     console.log("로그인 응답 : ", response);
+        //     console.log(getServerSession());
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        const user = await res.json();
 
-          const user = response?.data; // 백엔드에서 받은 유저 데이터
-
-          if (user) {
-            return user; // ✅ 성공 시 user 반환 (user 객체는 JWT 토큰에 들어감)
-          } else {
-            return null; // ❌ 실패 시 null 반환
-          }
-        } catch (error) {
-          console.error("로그인 에러:", error);
-          return null;
+        if (res.ok && user) {
+          return user; // 이 user 객체 안에 accessToken이 있어야 함
         }
+        return null;
       },
-      // async authorize(credentials: Credentials | undefined) {
-      //   if (!credentials) {
-      //     console.error("No credentials provided");
-      //     return null;
-      //   }
-      //   try {
-      //     const response = await signIn({
-      //       username: credentials.username,
-      //       password: credentials.password,
-      //     });
-      //     if (response) {
-      //       const tokens = response.data;
-      //       return {
-      //         id: credentials.username, // nextauth 타입 맞추기용
-      //         ...tokens,
-      //       };
-      //     }
-      //     return null;
-      //   } catch (error) {
-      //     console.error("Authorize error:", error);
-      //     return null;
-      //   }
-      // },
     }),
     KakaoProvider({
       clientId: process.env.KAKAO_CLIENT_ID as string,
@@ -145,6 +122,32 @@ const handler = NextAuth({
       clientSecret: process.env.NAVER_CLIENT_SECRET as string,
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.refreshToken = user.refreshToken; // 세션에도 accessToken 주입
+        token.accessToken = user.accessToken; // 로그인 성공 시 accessToken 저장
+        token.id = user.id; // 토큰에 유저 ID 저장
+        token.role = user?.role; // 토큰에 유저 권한 저장
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.accessToken = token.accessToken; // 세션에도 accessToken 주입
+        session.refreshToken = token.refreshToken; // 세션에도 accessToken 주입
+        session.user.id = token.id;
+        session.user.role = token.role;
+      }
+      return session;
+    },
+  },
+  session: {
+    strategy: "jwt", // 세션 방식: jwt 기반
+  },
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET, // 반드시 env 설정
+  },
 });
 
 export { handler as GET, handler as POST };

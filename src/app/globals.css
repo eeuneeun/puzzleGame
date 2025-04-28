@@ -273,6 +273,9 @@ button {
 .game-zone > div:nth-child(2n + 1) {
   background: #3f7278;
 }
+.game-zone .empty-sell {
+  background-color: #fff;
+}
 .me {
   width: 10%;
   height: 10%;

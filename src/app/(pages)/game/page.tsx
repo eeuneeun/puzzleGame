@@ -51,8 +51,12 @@ export default function Game() {
   // # 임시 배열 함수
   function arrLoop() {
     let newArr = [];
-    for (let i = 0; i < 81; i++) {
-      newArr.push(<div key={i}>{i + 1}</div>);
+    for (let i = 0; i < 82; i++) {
+      newArr.push(
+        <div key={i} className={i == 0 ? "empty-sell" : ""}>
+          {i}
+        </div>
+      );
     }
     shuffle(newArr);
     return newArr;

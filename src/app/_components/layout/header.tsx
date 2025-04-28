@@ -1,6 +1,6 @@
 "use client";
 import useUserStore from "@/app/_store/user";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import SensorOccupiedIcon from "@mui/icons-material/SensorOccupied";
@@ -15,35 +15,33 @@ export default function Header({}: Props) {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
   const { data: sessionData, update } = useSession();
-  console.log("data", sessionData);
+  console.log("클라이언트 세션 : ", sessionData);
 
   // ★ 로그 아웃
-  function logout() {
-    // fetch("http://localhost:8080/logout")
-    //   .then((response) => {
-    //     console.log(response);
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     let authors = data;
-    //   });
-    axios
-      .get("http://localhost:8080/logout", {
-        headers: {
-          withCredentials: true,
-          Authorization: `Bearer eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..HFJ9boKE_OoxHhGw.s8JihR3BPoPHn1Bin6p1ZmDD8X26kO7W4nM4Emej7ARN3en_rU4ya4zZPeh7bmG7u60ATxM4V8qT0L0CLJvWAQjl1FsUu4-3tYpRDhxe6arEa20H9OQ5j2G6PGRkw3QF-e2Nxzxa5b_vIgVFDmk6Kwg9sId2WGou0G99oevJoB65qPyhVWCX.rNCX67ijvcwCNQIpuWSzQQ`,
-        },
-      })
-      .then(function (response) {
-        if (response.status == 200) {
-          alert("로그아웃 처리 되었습니다.");
-          router.push("/");
-        }
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  async function logout() {
+    if (!sessionData?.accessToken) {
+      console.error("No access token!");
+      return;
+    }
+    console.log(sessionData.accessToken);
+    const res = await fetch("http://localhost:8080/logout", {
+      method: "POST",
+      mode: "cors",
+      credentials: "include", // 🍪 쿠키 쓰면 추가
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionData.accessToken}`, // accessToken 보내기
+      },
+    });
+
+    const result = await res;
+    if (result.status == 200) {
+      signOut({ callbackUrl: "/" });
+      alert("로그아웃 처리 되었습니다.");
+      router.push("/");
+    } else {
+      console.log("로그아웃 실패");
+    }
   }
   // const { updateUser } = useUserStore();
   // updateUser(session?.user)

@@ -1,3 +1,4 @@
+import { access } from "fs";
 import { create } from "zustand";
 
 const useUserStore = create((set) => ({
@@ -6,6 +7,10 @@ const useUserStore = create((set) => ({
     name: "",
     profile: "",
   },
+  token: {
+    refreshToken: "",
+  },
+
   removeAllUserInfo: () =>
     set({
       user: {
@@ -15,6 +20,12 @@ const useUserStore = create((set) => ({
       },
     }),
   updateUser: (newUerInfo: any) => set({ user: { ...newUerInfo } }),
+  updateRefreshToken: (newToken: string) =>
+    set({
+      token: {
+        refreshToken: newToken,
+      },
+    }),
 }));
 
 export default useUserStore;
