@@ -73,9 +73,9 @@ interface Credentials {
 //   }
 // };
 const handler = NextAuth({
-  // pages: {
-  //   signIn: "/signin",
-  // },
+  pages: {
+    signIn: "/signin",
+  },
   secret: process.env.SECRET,
   providers: [
     CredentialsProvider({
@@ -93,18 +93,7 @@ const handler = NextAuth({
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" },
         });
-        // const response = await axios
-        //   .post("http://localhost:8080/login", {
-        //     email: credentials?.email,
-        //     password: credentials?.password,
-        //   })
-        //   .then(function (response) {
-        //     console.log("로그인 응답 : ", response);
-        //     console.log(getServerSession());
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
+
         const user = await res.json();
 
         if (res.ok && user) {
@@ -125,8 +114,8 @@ const handler = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.refreshToken = user.refreshToken; // 세션에도 accessToken 주입
         token.accessToken = user.accessToken; // 로그인 성공 시 accessToken 저장
+        token.refreshToken = user.refreshToken; // 로그인 성공 시 refreshToken 저장
         token.id = user.id; // 토큰에 유저 ID 저장
         token.role = user?.role; // 토큰에 유저 권한 저장
       }
@@ -134,10 +123,13 @@ const handler = NextAuth({
     },
     async session({ session, token }) {
       if (token) {
-        session.accessToken = token.accessToken; // 세션에도 accessToken 주입
-        session.refreshToken = token.refreshToken; // 세션에도 accessToken 주입
-        session.user.id = token.id;
-        session.user.role = token.role;
+        // session 에 로그인 성공 시 필요한 정보들 저장
+        session.accessToken = token.accessToken;
+        session.refreshToken = token.refreshToken;
+        session.user.email = token?.email;
+        session.user.name = token?.name;
+        session.user.image = token?.image;
+        session.user.role = token?.role;
       }
       return session;
     },

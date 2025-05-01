@@ -94,15 +94,21 @@ export default function SigninForm() {
           </li>
           <li>
             <button
-              onClick={() =>
-                router.push("http://localhost:3000/api/auth/signin")
-              }
+              onClick={(event) => {
+                event.preventDefault();
+                signIn("naver", { callbackUrl: "/" });
+              }}
             >
               네이버
             </button>
           </li>
           <li>
-            <button onClick={() => signIn("kakao", { callbackUrl: "/" })}>
+            <button
+              onClick={(event) => {
+                event.preventDefault();
+                signIn("kakao", { callbackUrl: "/" });
+              }}
+            >
               카카오
             </button>
           </li>

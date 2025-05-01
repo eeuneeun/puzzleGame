@@ -55,7 +55,7 @@ export default function Header({}: Props) {
   }, [sessionData]);
   return (
     <header className="header">
-      <span className="title">Puzzle App</span>
+      <span className="title">Puzzle App </span>
       <div className="login-wrap">
         {isLogin ? (
           <button onClick={() => logout()}>
