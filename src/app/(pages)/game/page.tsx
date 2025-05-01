@@ -45,6 +45,10 @@ export default function Game() {
 
     // # 엔터 키 눌렀을 경우 블럭 이동 함수
     if (event.key === "Enter") {
+      console.log(event)
+
+      
+      targetEl.pointerEvents = "none";
     }
   }
 
